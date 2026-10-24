@@ -1,0 +1,43 @@
+name: Verify helper
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Engine and protocol integration checks
+        shell: pwsh
+        run: ./windows/test.ps1
+      - name: Publish standalone CLI and GUI
+        shell: pwsh
+        run: ./windows/publish.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-x64
+          path: windows/dist/win-x64/
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Install build SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
+      - name: JVM checks, lint and debug APK
+        working-directory: android
+        run: bash ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk

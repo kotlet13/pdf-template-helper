@@ -1,0 +1,17 @@
+**/bin/
+**/obj/
+**/build/
+**/.gradle/
+**/.kotlin/
+**/local.properties
+**/key.properties
+**/.idea/
+*.jks
+*.keystore
+*.log
+.qa/
+output/
+dist/
+**/test-output/
+samples/gumb-qa/
+__pycache__/

@@ -1,0 +1,33 @@
+{
+  "fields": {
+    "customer": "Čebelica Šimec - synthetic example",
+    "date": "2026-10-24",
+    "reading": "12.5"
+  },
+  "checkboxes": {
+    "accepted": true
+  },
+  "stamps": [
+    {
+      "page": 1,
+      "x": 40,
+      "y": 475,
+      "text": "Šumniki: č ć đ š ž Č Ć Đ Š Ž",
+      "fontSize": 11
+    }
+  ],
+  "images": [
+    {
+      "page": 1,
+      "x": 50,
+      "y": 370,
+      "width": 200,
+      "height": 80,
+      "path": "assets/example.png",
+      "fit": "Contain"
+    }
+  ],
+  "fontPath": "assets/NotoSans-Regular.ttf",
+  "strict": true,
+  "flatten": true
+}

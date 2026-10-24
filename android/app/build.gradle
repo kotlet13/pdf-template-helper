@@ -1,0 +1,34 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+android {
+    namespace 'org.pdfhelper.app'
+    compileSdk 36
+    defaultConfig {
+        applicationId 'org.pdfhelper.app'
+        minSdk 27
+        targetSdk 36
+        versionCode 1
+        versionName '1.0.0'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    kotlinOptions { jvmTarget = '17' }
+    packaging { resources.merges += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE*', 'META-INF/NOTICE*'] }
+    sourceSets.main.assets.srcDir(layout.buildDirectory.dir('generated/licenseAssets'))
+}
+tasks.register('bundleLicenseAssets', Copy) {
+    from(rootProject.file('../LICENSE'), rootProject.file('../LICENSE-itext.md'), rootProject.file('../THIRD_PARTY_NOTICES.md'))
+    into(layout.buildDirectory.dir('generated/licenseAssets/licenses'))
+}
+tasks.named('preBuild').configure { dependsOn('bundleLicenseAssets') }
+dependencies {
+    implementation 'androidx.core:core-ktx:1.16.0'
+    implementation 'com.google.code.gson:gson:2.13.1'
+    implementation 'com.itextpdf.android:forms-android:9.2.0'
+    implementation 'com.itextpdf.android:layout-android:9.2.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+}
